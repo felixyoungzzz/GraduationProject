@@ -7,4 +7,7 @@ router.get('/collection/:userId', ctx =>
   collectionController.getUserCollection(ctx),
 );
 
+router.put('/collection', ctx => collectionController.addUserCollection(ctx));
+router.post('/collection', ctx => collectionController.delUserCollection(ctx));
+
 module.exports = router;

@@ -15,12 +15,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     stock_id: {
       type: DataTypes.INTEGER(11),
-      allowNull: false
-    },
-    stock_symbol: {
-      type: DataTypes.CHAR(50),
       allowNull: false,
-      defaultValue: '0'
+      unique: true
     }
   }, {
     tableName: 'user_stock_collection'

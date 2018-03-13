@@ -11,7 +11,8 @@ module.exports = function(sequelize, DataTypes) {
     user_name: {
       type: DataTypes.CHAR(50),
       allowNull: true,
-      defaultValue: '0'
+      defaultValue: '0',
+      unique: true
     },
     password: {
       type: DataTypes.CHAR(128),
