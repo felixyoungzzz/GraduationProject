@@ -8,7 +8,7 @@
         <el-transfer v-model="collectedStock" :data="stockcodeList" filterable filter-placeholder="请输入股票代码或名字" :titles="['所有股票', '我的收藏']" :button-texts="['移除收藏', '加入收藏']" :props="{
           key:'stock_id',
           label:'stock_name'
-        }" :render-content="renderFunc" @change="handleChange">
+        }" :render-content="renderFunc" @change="handleChange" :filter-method="filterMethod">
         </el-transfer>
       </el-card>
       <div class="middle-box">
@@ -159,6 +159,12 @@ export default {
       if (per.includes('+')) {
         return true;
       } else return false;
+    },
+
+    //transfer filter method
+    filterMethod(query, item) {
+      let label = item.stock_name + item.stock_symbol;
+      return label.indexOf(query) > -1;
     },
   },
   created() {
