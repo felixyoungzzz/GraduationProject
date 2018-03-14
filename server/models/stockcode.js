@@ -21,7 +21,7 @@ async function getStockCodeById(stockId) {
     where: {
       stock_id: stockId,
     },
-    attributes: ['stock_symbol'],
+    attributes: ['stock_name', 'stock_symbol'],
   });
   return stockSymbol;
 }
