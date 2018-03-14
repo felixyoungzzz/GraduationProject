@@ -107,7 +107,7 @@ export default {
 
 /* stock index card */
 .index-card-box {
-  width: 80%;
+  width: 75%;
   display: flex;
   background: #f7f7f7;
 }

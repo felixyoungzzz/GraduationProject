@@ -3,15 +3,15 @@ const axios = require('axios');
 async function getrealtimeStock(ctx) {
   let indexCode = ctx.params.indexCode;
   let res = await axios.get('http://hq.sinajs.cn/list=' + indexCode);
-  let result = res.data.slice(30, -3).split(',');
-  if (!result[2].includes('-')) {
-    result[1] = '+' + result[1];
+  let result = res.data.split(',');
+  if (!result[3].includes('-')) {
     result[2] = '+' + result[2];
+    result[3] = '+' + result[3];
   }
   ctx.body = {
-    current: result[0],
-    change: result[1],
-    percentage: result[2],
+    current: result[1],
+    change: result[2],
+    percentage: result[3],
   };
 }
 
