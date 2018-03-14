@@ -20,9 +20,9 @@
         <el-table :data="collectionData" style="width: 100%">
           <el-table-column prop="name" label="股票名字" width="180">
           </el-table-column>
-          <el-table-column prop="current" label="实时报价" width="180">
+          <el-table-column prop="current" label="实时报价/￥" width="180">
           </el-table-column>
-          <el-table-column prop="change" label="涨跌额">
+          <el-table-column prop="change" label="涨跌额/￥">
           </el-table-column>
           <el-table-column prop="percentage" label="涨跌幅/%">
           </el-table-column>
@@ -182,6 +182,5 @@ export default {
 .middle-label {
   margin: 1.5rem;
   font-size: 2rem;
-  font-family: 'Dosis', sans-serif;
 }
 </style>
