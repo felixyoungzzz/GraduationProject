@@ -3,7 +3,8 @@ const path = require('path'),
   logger = require('koa-logger'),
   bodyparser = require('koa-bodyparser'),
   jwt = require('koa-jwt'),
-  serve = require('koa-static');
+  serve = require('koa-static'),
+  historyapifallback = require('koa-history-api-fallback');
 
 //all router
 const allRouter = require('./server/routes/all');
@@ -52,11 +53,12 @@ app.on('error', err => {
   console.log('sever err: ' + err);
 });
 
-//static server
-app.use(serve(path.resolve('./dist')));
-
 //router
 app.use(allRouter.routes());
+
+//static server
+app.use(historyapifallback());
+app.use(serve(path.resolve('./dist')));
 
 app.listen(8889, () => {
   console.log('Koa is listening on port 8889');
