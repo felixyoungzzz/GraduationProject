@@ -49,6 +49,7 @@ async function getUserRealtimeStock(ctx) {
         result[3] = '+' + result[3];
       }
       results.push({
+        symbol: stock.stock_symbol,
         name: stock.stock_name,
         current: result[1],
         change: result[2],
@@ -59,6 +60,7 @@ async function getUserRealtimeStock(ctx) {
       let percentage = change / result[3] * 100;
       if (change > 0) {
         results.push({
+          symbol: stock.stock_symbol,
           name: stock.stock_name,
           current: result[3],
           change: '+' + change.toFixed(3).toString(),
@@ -66,6 +68,7 @@ async function getUserRealtimeStock(ctx) {
         });
       } else {
         results.push({
+          symbol: stock.stock_symbol,
           name: stock.stock_name,
           current: result[3],
           change: change.toFixed(3).toString(),

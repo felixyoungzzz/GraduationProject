@@ -17,16 +17,23 @@
       </div>
 
       <el-card class="collection-table">
-        <el-table :data="collectionData" style="width: 100%">
-          <el-table-column prop="name" label="股票名字" width="180">
-          </el-table-column>
-          <el-table-column prop="current" label="实时报价/￥" width="180">
-          </el-table-column>
-          <el-table-column prop="change" label="涨跌额/￥">
-          </el-table-column>
-          <el-table-column prop="percentage" label="涨跌幅/%">
-          </el-table-column>
-        </el-table>
+        <el-row class="table-title">
+          <el-col :span="9">股票名字</el-col>
+          <el-col :span="5">实时报价/￥</el-col>
+          <el-col :span="5">涨跌额/￥</el-col>
+          <el-col :span="5">涨跌幅/%</el-col>
+        </el-row>
+        <el-row v-for="item in collectionData" :key="item.name" class="table-content">
+          <div class="bottom-border">
+            <el-col :span=" 9 " class="stock-name">{{item.name}}
+              <RealTimeChart v-bind:symbol="item.symbol"></RealTimeChart>
+            </el-col>
+            <el-col :span="5 " v-bind:class="{up:upordown(item.percentage),down:!upordown(item.percentage)} ">{{item.current}}</el-col>
+            <el-col :span="5 " v-bind:class="{up:upordown(item.percentage),down:!upordown(item.percentage)} ">{{item.change}}</el-col>
+            <el-col :span="5 " v-bind:class="{up:upordown(item.percentage),down:!upordown(item.percentage)} ">{{item.percentage}}</el-col>
+          </div>
+        </el-row>
+
       </el-card>
     </div>
   </div>
@@ -35,6 +42,7 @@
 <script>
 import jwt from 'jsonwebtoken';
 import { setTimeout } from 'timers';
+import RealTimeChart from '../components/realtimechart';
 export default {
   data() {
     //get user info
@@ -67,6 +75,9 @@ export default {
       collectionData: [],
       updateTime: new Date().toTimeString(),
     };
+  },
+  components: {
+    RealTimeChart,
   },
   methods: {
     //get all stock
@@ -182,5 +193,27 @@ export default {
 .middle-label {
   margin: 1.5rem;
   font-size: 2rem;
+}
+
+.table-title {
+  padding: 1.5rem;
+  font-size: 1.3rem;
+  color: #777;
+  font-weight: bold;
+}
+
+.table-content {
+  padding: 0 1.5rem;
+  font-size: 1.25rem;
+  line-height: 4rem;
+  color: #555;
+}
+
+.stock-name {
+  cursor: pointer;
+}
+
+.bottom-border {
+  border-bottom: solid 1px #e6e6e6;
 }
 </style>
