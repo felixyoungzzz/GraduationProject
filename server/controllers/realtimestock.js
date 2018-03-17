@@ -80,7 +80,27 @@ async function getUserRealtimeStock(ctx) {
   ctx.body = results;
 }
 
+async function getDayStock(ctx) {
+  let stockSymbol = ctx.params.stockSymbol;
+  if (stockSymbol.includes('sh')) {
+    let res = await axios.get(
+      'http://img1.money.126.net/data/hs/time/today/0' +
+        stockSymbol.slice(2) +
+        '.json',
+    );
+    ctx.body = res.data;
+  } else {
+    let res = await axios.get(
+      'http://img1.money.126.net/data/hs/time/today/1' +
+        stockSymbol.slice(2) +
+        '.json',
+    );
+    ctx.body = res.data;
+  }
+}
+
 module.exports = {
   getrealtimeStock,
   getUserRealtimeStock,
+  getDayStock,
 };

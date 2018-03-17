@@ -10,4 +10,8 @@ router.get('/realtimestock/:indexCode', ctx =>
 router.get('/userrealtimestock/:userId', ctx =>
   realtimestockController.getUserRealtimeStock(ctx),
 );
+
+router.get('/daystock/:stockSymbol', ctx =>
+  realtimestockController.getDayStock(ctx),
+);
 module.exports = router;
