@@ -218,6 +218,7 @@ export default {
   font-size: 1.25rem;
   line-height: 4rem;
   color: #555;
+  background: white;
 }
 
 .stock-name {

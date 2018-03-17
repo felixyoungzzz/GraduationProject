@@ -15,6 +15,8 @@ async function getrealtimeStock(ctx) {
       current: result[1],
       change: result[2],
       percentage: result[3],
+      high: result[4],
+      low: result[5],
     };
   } else {
     let change = result[3] - result[2];
@@ -24,12 +26,16 @@ async function getrealtimeStock(ctx) {
         current: result[3],
         change: '+' + change.toFixed(3).toString(),
         percentage: '+' + percentage.toFixed(2).toString(),
+        high: result[4],
+        low: result[5],
       };
     } else {
       ctx.body = {
         current: result[3],
         change: change.toFixed(3).toString(),
         percentage: percentage.toFixed(2).toString(),
+        high: result[4],
+        low: result[5],
       };
     }
   }
