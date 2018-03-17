@@ -37,21 +37,13 @@ export default {
     //changeview
     changetoshow() {
       let item = document.querySelector('.' + this.symbol);
-      setTimeout(() => {
-        item.classList.remove('hidden');
-      }, 50);
-      setTimeout(() => {
-        item.classList.add('show');
-      }, 50);
+      item.classList.remove('hidden');
+      item.classList.add('show');
     },
     changetohidden() {
       let item = document.querySelector('.' + this.symbol);
-      setTimeout(() => {
-        item.classList.remove('show');
-      }, 50);
-      setTimeout(() => {
-        item.classList.add('hidden');
-      }, 50);
+      item.classList.remove('show');
+      item.classList.add('hidden');
     },
 
     //draw real time chart
@@ -295,10 +287,6 @@ export default {
 </script>
 
 <style>
-.realtime-chart {
-  transition: height 0.5s ease-in-out;
-}
-
 .hidden {
   height: 0px;
   visibility: hidden;

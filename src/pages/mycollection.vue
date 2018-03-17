@@ -37,7 +37,6 @@
             <el-col :span="5" v-bind:class="{up:upordown(item.percentage),down:!upordown(item.percentage)} ">{{item.percentage}}</el-col>
           </div>
         </el-row>
-
       </el-card>
     </div>
   </div>
@@ -211,6 +210,10 @@ export default {
   font-size: 1.3rem;
   color: #777;
   font-weight: bold;
+}
+
+.collection-table {
+  background: white;
 }
 
 .table-content {
