@@ -29,7 +29,7 @@
         <el-row v-for="item in collectionData" :key="item.symbol" class="table-content">
           <div class="bottom-border">
             <el-col :span="9" class="stock-name">
-              <div v-on:click="changeview(item.symbol)">{{item.name}}</div>
+              <div v-on:click="changeview(item.symbol)">{{item.name+' '+item.symbol.slice(2)}}</div>
               <RealTimeChart v-bind:symbol="item.symbol" :key="item.symbol" v-bind:ref="item.symbol"></RealTimeChart>
             </el-col>
             <el-col :span="5" v-bind:class="{up:upordown(item.percentage),down:!upordown(item.percentage)} ">{{item.current}}</el-col>

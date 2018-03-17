@@ -16,7 +16,7 @@ export default {
       height: 380,
       margin: {
         top: 10,
-        right: 20,
+        right: 40,
         bottom: 10,
         left: 40,
       },
@@ -80,27 +80,65 @@ export default {
         );
 
       //x坐标轴
+      let tFormat = d3.timeParse('%H%M');
       let xAxisScale = d3
         .scaleLinear()
-        .domain([930, 1500])
+        .domain([1, 5])
         .range([0, rWidth]);
 
       let xAxis = d3
         .axisBottom()
         .scale(xAxisScale)
         .ticks(6)
-        .tickFormat(time => time.toString().substr(0, 2) + ' : 00');
+        .tickValues([1, 2, 3, 4, 5])
+        .tickFormat(time => {
+          if (time === 1) {
+            return '09:30';
+          } else if (time === 2) {
+            return '10:30';
+          } else if (time === 3) {
+            return '13:00';
+          } else if (time === 4) {
+            return '14:00';
+          } else {
+            return '15:00';
+          }
+        });
 
       inner_svg
         .append('g')
         .attr('transform', 'translate(0,' + rHeight * (3 / 4) + ')')
         .call(xAxis);
 
+      //获取分时线数据
+      let res = await this.$http.get('/api/daystock/' + this.symbol);
+      let daystockData = res.data;
+
+      let data = daystockData.data,
+        total = 242,
+        count = daystockData.count,
+        yestClose = daystockData.yestclose;
+
       //y坐标轴
-      let yAxisScale = d3
-        .scaleLinear()
-        .domain([low, high])
-        .range([rHeight, rHeight / 4]);
+      let yAxisScale = '';
+
+      //判断昨日收盘价与今天数据的关系
+      if (yestClose > high) {
+        yAxisScale = d3
+          .scaleLinear()
+          .domain([low, yestClose + (yestClose - low) / 10])
+          .range([rHeight, rHeight / 4]);
+      } else if (yestClose < low) {
+        yAxisScale = d3
+          .scaleLinear()
+          .domain([yestClose - (yestClose - low) / 10, high])
+          .range([rHeight, rHeight / 4]);
+      } else {
+        yAxisScale = d3
+          .scaleLinear()
+          .domain([low, high])
+          .range([rHeight, rHeight / 4]);
+      }
 
       let yAxis = d3
         .axisLeft()
@@ -114,14 +152,28 @@ export default {
 
       //走势图
 
-      //获取分时线数据
-      let res = await this.$http.get('/api/daystock/' + this.symbol);
-      let daystockData = res.data;
+      //涨跌幅坐标轴
+      let changePer = [
+        (high - yestClose) * 100 / yestClose,
+        (low - yestClose) * 100 / yestClose,
+      ];
+      let changeAxisScale = d3
+        .scaleLinear()
+        .domain([changePer[1], changePer[0]])
+        .range([rHeight, rHeight / 4]);
 
-      let data = daystockData.data,
-        total = 242,
-        count = daystockData.count,
-        yestClose = daystockData.yestclose;
+      let changeAxis = d3
+        .axisRight()
+        .scale(changeAxisScale)
+        .ticks(6)
+        .tickFormat(per => {
+          return per.toFixed(2) + '%';
+        });
+
+      inner_svg
+        .append('g')
+        .attr('transform', 'translate(' + rWidth + ',-' + rHeight / 4 + ')')
+        .call(changeAxis);
 
       //走势线
       //获取走势线数据和均线数据
@@ -171,7 +223,7 @@ export default {
         .attr('d', averageData_d)
         .attr('fill', 'none')
         .attr('stroke-width', '1px')
-        .attr('stroke', '#161012');
+        .attr('stroke', '#cb3e62');
 
       //画昨日收盘线
       inner_svg
