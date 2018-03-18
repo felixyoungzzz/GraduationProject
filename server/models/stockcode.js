@@ -10,7 +10,7 @@ async function getAllStockCode() {
     stockcodeList.push({
       stock_id: el.stock_id,
       stock_name: el.stock_name,
-      stock_symbol: el.stock_symbol.slice(2),
+      stock_symbol: el.stock_symbol,
     });
   });
   return stockcodeList;

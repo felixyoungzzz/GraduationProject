@@ -109,7 +109,8 @@ export default {
       let data = daystockData.data,
         total = 242,
         count = daystockData.count,
-        yestClose = daystockData.yestclose;
+        yestClose = daystockData.yestclose,
+        date = daystockData.date;
 
       //y坐标轴
       let yAxisScale = '';
@@ -281,6 +282,14 @@ export default {
         .text('最高成交量:' + highVolume)
         .attr('font-size', '12px')
         .attr('transform', 'translate(0,' + 5 * rHeight / 6 + ')');
+
+      //添加日期
+      inner_svg
+        .append('g')
+        .append('text')
+        .text(date)
+        .attr('font-size', '12px')
+        .attr('transform', 'translate(5,0)');
     },
   },
 };
