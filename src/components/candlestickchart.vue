@@ -333,7 +333,7 @@ export default {
         .attr('transform', 'translate(10,3)')
         .append('text')
         .attr('font-size', '12px')
-        .text(this.code);
+        .text(this.code.slice(2));
     },
     async redrawK_line() {
       await d3.selectAll('svg').remove();
