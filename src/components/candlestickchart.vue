@@ -250,7 +250,7 @@ export default {
         .enter()
         .append('rect')
         .attr('x', (d, i) => {
-          return (length - i) * (k_width / length);
+          return (length-1 - i) * (k_width / length);
         })
         .attr('y', (d, i) => {
           return k_height - yscale(d3.max([d.open, d.close]));
@@ -295,13 +295,13 @@ export default {
         .append('line')
         .attr('x1', (d, i) => {
           return (
-            (length - i) * (k_width / length) +
+            (length-1 - i) * (k_width / length) +
             (k_width / length - candlePadding) / 2
           );
         })
         .attr('x2', (d, i) => {
           return (
-            (length - i) * (k_width / length) +
+            (length-1 - i) * (k_width / length) +
             (k_width / length - candlePadding) / 2
           );
         })
