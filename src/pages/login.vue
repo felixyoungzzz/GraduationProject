@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1 class="title">在线查看K线图</h1>
-    <p class="sub-title">Here,你可以查看你收藏的股票的K线图以及相关新闻</p>
+    <h1 class="title">在线查看股票相关图表</h1>
+    <p class="sub-title">Here,你可以查看你收藏的股票的K线图以及实时数据</p>
     <el-card id="card-box">
       <div class="chart-box">
         <img src="../assets/login-logo.svg" alt="">
