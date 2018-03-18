@@ -48,7 +48,7 @@ export default {
     };
     return {
       width: 1000,
-      height: 500,
+      height: 450,
       updateTime: new Date().toTimeString(),
       //data
       userId: getUserId(),
