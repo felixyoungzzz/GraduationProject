@@ -69,7 +69,7 @@ export default {
         return (
           <span>
             {option.stock_id} - {option.stock_name}
-            {option.stock_symbol}
+            {option.stock_symbol.slice(2)}
           </span>
         );
       },

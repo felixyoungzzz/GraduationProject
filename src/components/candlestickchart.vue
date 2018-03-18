@@ -48,7 +48,7 @@ export default {
     };
     return {
       width: 1000,
-      height: 450,
+      height: 480,
       updateTime: new Date().toTimeString(),
       //data
       userId: getUserId(),
@@ -56,13 +56,13 @@ export default {
       //options
       options: [
         {
-          value: 'collection',
-          label: '我的收藏',
+          value: 'all',
+          label: '所有股票',
           children: [],
         },
         {
-          value: 'all',
-          label: '所有股票',
+          value: 'collection',
+          label: '我的收藏',
           children: [],
         },
       ],
@@ -97,6 +97,15 @@ export default {
               picker.$emit('pick', [start, end]);
             },
           },
+          {
+            text: '最近一年',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 365);
+              picker.$emit('pick', [start, end]);
+            },
+          },
         ],
       },
       code: 'sz000001 平安银行',
@@ -122,13 +131,13 @@ export default {
       });
       stocklist.forEach((el, index) => {
         if (userstockids.includes(el.stock_id)) {
-          this.options[0].children.push({
-            value: el.stock_symbol+' '+el.stock_name,
+          this.options[1].children.push({
+            value: el.stock_symbol + ' ' + el.stock_name,
             label: el.stock_symbol.slice(2) + ' ' + el.stock_name,
           });
         } else {
-          this.options[1].children.push({
-            value: el.stock_symbol+' '+el.stock_name,
+          this.options[0].children.push({
+            value: el.stock_symbol + ' ' + el.stock_name,
             label: el.stock_symbol.slice(2) + ' ' + el.stock_name,
           });
         }
@@ -140,14 +149,14 @@ export default {
       this.redrawK_line();
     },
 
-    handler2(){
+    handler2() {
       this.redrawK_line();
     },
 
     async getResult(type) {
       let res = await this.$http.get(
         '/api/historystock/' +
-          this.code.slice(2,8) +
+          this.code.slice(2, 8) +
           '/' +
           this.dateRange[0] +
           '/' +
@@ -250,10 +259,12 @@ export default {
         .enter()
         .append('rect')
         .attr('x', (d, i) => {
-          return (length-1 - i) * (k_width / length);
+          return (length - 1 - i) * (k_width / length);
         })
         .attr('y', (d, i) => {
-          return k_height - yscale(d3.max([d.open, d.close]));
+          return (
+            k_height - yscale(d3.max([parseFloat(d.open), parseFloat(d.close)]))
+          );
         })
         .attr('width', (d, i) => {
           return k_width / length - candlePadding;
@@ -273,13 +284,13 @@ export default {
             '\n开盘价:' +
             d.open +
             '\n收盘价:' +
-            d.low +
-            '\n涨跌额' +
+            d.close +
+            '\n涨跌额:' +
             d.change +
-            '\n涨跌幅' +
+            '\n涨跌幅:' +
             d.percentage +
             '\n最低价:' +
-            d.close +
+            d.low +
             '\n最高价:' +
             d.high +
             '\n成交量:' +
@@ -295,13 +306,13 @@ export default {
         .append('line')
         .attr('x1', (d, i) => {
           return (
-            (length-1 - i) * (k_width / length) +
+            (length - 1 - i) * (k_width / length) +
             (k_width / length - candlePadding) / 2
           );
         })
         .attr('x2', (d, i) => {
           return (
-            (length-1 - i) * (k_width / length) +
+            (length - 1 - i) * (k_width / length) +
             (k_width / length - candlePadding) / 2
           );
         })
@@ -316,8 +327,13 @@ export default {
           else return 'green';
         });
 
-        //上标
-        inner_svg.append('g').attr('transform','translate(10,3)').append('text').attr('font-size','12px').text(this.code)
+      //上标
+      inner_svg
+        .append('g')
+        .attr('transform', 'translate(10,3)')
+        .append('text')
+        .attr('font-size', '12px')
+        .text(this.code);
     },
     async redrawK_line() {
       await d3.selectAll('svg').remove();
