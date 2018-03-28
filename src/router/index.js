@@ -1,11 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Login from '../pages/login.vue';
-import Stock from '../pages/stock.vue';
-import Home from '../pages/home.vue';
-import MyCollection from '../pages/mycollection.vue';
-import CandleStickView from '../pages/candlestickview.vue';
-import PersonalCenter from '../pages/personalcenter.vue';
 
 Vue.use(Router);
 
@@ -14,32 +8,32 @@ const router = new Router({
     {
       path: '/',
       name: 'Login',
-      component: Login,
+      component: () => import('../pages/login.vue'),
     },
     {
       path: '/stock',
       name: 'Stock',
-      component: Stock,
+      component: () => import('../pages/stock.vue'),
       children: [
         {
           path: '/home',
           name: 'Home',
-          component: Home,
+          component: () => import('../pages/home.vue'),
         },
         {
           path: '/mycollection',
           name: 'MyCollection',
-          component: MyCollection,
+          component: () => import('../pages/mycollection.vue'),
         },
         {
           path: '/candlestickview',
           name: 'CandleStickView',
-          component: CandleStickView,
+          component: () => import('../pages/candlestickview.vue'),
         },
         {
           path: '/personalcenter',
           name: 'PersonalCenter',
-          component: PersonalCenter,
+          component: () => import('../pages/personalcenter.vue'),
         },
       ],
     },
